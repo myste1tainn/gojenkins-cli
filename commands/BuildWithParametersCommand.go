@@ -2,7 +2,7 @@ package commands
 
 import (
 	"errors"
-	"fmt"
+	"github.com/myste1tainn/gojenkins-cli/helpers/logger"
 	"github.com/myste1tainn/gojenkins-cli/models/requests"
 	"github.com/myste1tainn/gojenkins-core/controllers"
 	coreRequests "github.com/myste1tainn/gojenkins-core/models/requests"
@@ -17,9 +17,9 @@ type DefaultBuildWithParametersCommand struct {
 	JobController controllers.JobController
 }
 
-func (this *DefaultBuildWithParametersCommand) execute(jobUrl string, params map[string]string) {
-	fmt.Printf("build-with-parameters: jobUrl:%s params:%v\n", jobUrl, params)
-	this.JobController.BuildWithParameters(coreRequests.BuildWithParametersRequest{
+func (this *DefaultBuildWithParametersCommand) execute(jobUrl string, params map[string]string) error {
+	logger.Log("build-with-parameters: jobUrl:%s params:%v\n", jobUrl, params)
+	return this.JobController.BuildWithParameters(coreRequests.BuildWithParametersRequest{
 		JobUrl: jobUrl,
 		Params: params,
 	})
@@ -37,6 +37,5 @@ func (this DefaultBuildWithParametersCommand) Execute(args []string) error {
 			params[vals[0]] = vals[1]
 		}
 	}
-	this.execute(args[0], params)
-	return nil
+	return this.execute(args[0], params)
 }
