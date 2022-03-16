@@ -1,8 +1,20 @@
 package CliArgsParser
 
-import "github.com/jessevdk/go-flags"
+import (
+	"fmt"
+	"github.com/jessevdk/go-flags"
+)
+
+var group = flags.Group{
+	ShortDescription: "Group Short Description",
+	LongDescription:  "Group Long Description",
+	Namespace:        "Group namespace",
+	EnvNamespace:     "Group EnvNamespace",
+	Hidden:           false,
+}
 
 var command = flags.Command{
+	Group:               &group,
 	Name:                "build-with-parameters",
 	Active:              nil,
 	SubcommandsOptional: false,
@@ -16,7 +28,18 @@ var BuildWithParametersArgsParser = flags.Parser{
 	Options:               0,
 	NamespaceDelimiter:    "",
 	EnvNamespaceDelimiter: "",
-	UnknownOptionHandler:  nil,
-	CompletionHandler:     nil,
-	CommandHandler:        nil,
+	UnknownOptionHandler: func(option string, arg flags.SplitArgument, args []string) ([]string, error) {
+		fmt.Println("UnknownOptionHandler", option, arg, args)
+		return args, nil
+	},
+	CompletionHandler: func(items []flags.Completion) {
+		fmt.Println("CompletionHandler", items)
+	},
+	CommandHandler: func(command flags.Commander, args []string) error {
+		fmt.Println("CommandHandler", command, args)
+		return nil
+	},
+}
+
+func Asdf() {
 }
