@@ -6,7 +6,7 @@ import (
 	gojenkins_core "github.com/myste1tainn/gojenkins-core/wire"
 )
 
-func NewCliArgParser() *flags.Parser {
+func NewMainArgsParser() *flags.Parser {
 	var parser = flags.NewParser(&struct{}{}, flags.Default)
 	_, err := parser.AddCommand(
 		"build-with-parameters",

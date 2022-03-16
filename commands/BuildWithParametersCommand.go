@@ -18,7 +18,7 @@ type DefaultBuildWithParametersCommand struct {
 }
 
 func (this *DefaultBuildWithParametersCommand) execute(jobUrl string, params map[string]string) error {
-	logger.Log("build-with-parameters: jobUrl:%s params:%v\n", jobUrl, params)
+	logger.Log("build-with-parameters: jobUrl:%s params:%v", jobUrl, params)
 	return this.JobController.BuildWithParameters(coreRequests.BuildWithParametersRequest{
 		JobUrl: jobUrl,
 		Params: params,
